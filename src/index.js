@@ -1,4 +1,5 @@
+import "./styles.css";
+import { ProjectsView } from "./view/ProjectsView/ProjectsView";
 
-
-// project class
-// todos
+const projectsView = new ProjectsView();
+projectsView.loadDefaultSideBar();
