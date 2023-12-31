@@ -2,29 +2,33 @@ import "./ProjectsView.css";
 
 export class ProjectsView {
   constructor() {
-    this.projectsViewContainer = document.createElement("nav");
-    this.projectsViewContainer.className = "projects-container";
+    this.projectsContainer = document.createElement("nav");
+    this.projectsContainer.className = "projects-container";
 
-    this.projectsViewHeader = document.createElement("h2");
-    this.projectsViewHeader.textContent = "Projects";
+    this.projectsHeader = document.createElement("h2");
+    this.projectsHeader.textContent = "Projects";
 
-    this.projectsViewMessage = document.createElement("p");
-    this.projectsViewMessage.textContent = "No projects yet!";
+    this.projectsList = document.createElement("ul");
+    this.projectsList.className = "projects-list";
+
+    this.allTodosList = document.createElement("li");
+    this.allTodosList.textContent = "All Todos";
 
     this.addProjectButton = document.createElement("button");
     this.addProjectButton.className = "add-project-button";
     this.addProjectButton.textContent = "Add Project";
   }
 
-  loadDefaultSideBar() {
-    this.projectsViewContainer.append(
-      this.projectsViewHeader,
-      this.projectsViewMessage,
+  loadInitialSideBar() {
+    this.projectsList.append(this.allTodosList);
+    this.projectsContainer.append(
+      this.projectsHeader,
+      this.projectsList,
       this.addProjectButton
     );
 
     const contentContainer = document.querySelector(".content");
-    contentContainer.append(this.projectsViewContainer);
+    contentContainer.append(this.projectsContainer);
   }
 
   // render(projects) {}
