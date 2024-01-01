@@ -1,27 +1,25 @@
 import "./TodoListView.css";
+import { Todo } from "../../model/todo";
 
 export class TodoListView {
-  constructor() {
+  static todoListViewCreated = false;
+
+  constructor(todoListModel) {
     this.mainContainer = document.createElement("main");
 
     this.todoListHeader = document.createElement("h1");
     this.todoListHeader.className = "todo-list-header";
+    this.todoListHeader.textContent = todoListModel.getTitle();
 
     this.todoList = document.createElement("ul");
     this.todoList.className = "todo-list";
-
-    this.todo = document.createElement("li");
 
     this.addTodoButton = document.createElement("button");
     this.addTodoButton.className = "add-todo-button";
     this.addTodoButton.textContent = "Add todo";
   }
 
-  loadInitialTodoList() {
-    this.todo.textContent = "No todos yet!";
-    this.todoListHeader.textContent = "All Todos";
-
-    this.todoList.append(this.todo);
+  createTodoList() {
     this.mainContainer.append(
       this.todoListHeader,
       this.todoList,
@@ -30,5 +28,31 @@ export class TodoListView {
 
     const contentContainer = document.querySelector(".content");
     contentContainer.append(this.mainContainer);
+  }
+
+  clearList() {
+    this.todoList.innerHTML = "";
+  }
+
+  render(todoList) {
+    if (!TodoListView.todoListViewCreated) {
+      this.createTodoList();
+      TodoListView.todoListViewCreated = true;
+    }
+
+    this.clearList();
+
+    const todos = todoList.getTodos();
+    if (!todos.length) {
+      const todoListItem = document.createElement("li");
+      todoListItem.textContent = Todo.noTodosMessage;
+      this.todoList.append(todoListItem);
+    }
+
+    for (let todo of todos) {
+      const todoListItem = document.createElement("li");
+      todoListItem.textContent = todo.getdescription();
+      this.todoList.append(todoListItem);
+    }
   }
 }

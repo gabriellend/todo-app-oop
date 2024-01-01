@@ -1,36 +1,37 @@
 export class Todo {
-    static id = 0;
+  static id = 0;
+  static noTodosMessage = "No todos yet!";
 
-    constructor (description, dueDate, priority) {
-        this.id = ++Todo.id;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-    }
+  constructor(description, dueDate, priority) {
+    this.id = ++Todo.id;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+  }
 
-    setDueDate(dueDate) {
-        // error check
-        this.dueDate = dueDate;
-    }
+  setDueDate(dueDate) {
+    // error check
+    this.dueDate = dueDate;
+  }
 
-    getDueDate() {
-        return this.dueDate;
-    }
+  getDueDate() {
+    return this.dueDate;
+  }
 
-    setPriority(priority) {
-        // error check
-        this.priority = priority;
-    }
+  setPriority(priority) {
+    // error check
+    this.priority = priority;
+  }
 
-    getPriority() {
-        return this.priority;
-    }
+  getPriority() {
+    return this.priority;
+  }
 
-    setDescription(description) {
-        this.description = description;
-    }
+  setDescription(description) {
+    this.description = description;
+  }
 
-    getDescription() {
-        return this.description;
-    }
+  getDescription() {
+    return this.description;
+  }
 }
