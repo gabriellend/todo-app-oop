@@ -1,6 +1,5 @@
 export class ProjectList {
   constructor() {
-    this.title = "Projects";
     this.projects = [];
   }
 

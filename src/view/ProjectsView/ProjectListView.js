@@ -9,7 +9,7 @@ export class ProjectListView {
     this.projectsContainer.className = "projects-container";
 
     this.projectsHeader = document.createElement("h2");
-    this.projectsHeader.textContent = projectListModel.getTitle();
+    this.projectsHeader.textContent = "Projects";
 
     this.projectListEl = document.createElement("ul");
     this.projectListEl.className = "projects-list";
