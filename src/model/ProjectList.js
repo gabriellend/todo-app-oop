@@ -1,6 +1,8 @@
+import { TodoList } from "./TodoList";
 export class ProjectList {
   constructor() {
-    this.projects = [];
+    // Initialize with default All Todos project
+    this.projects = [new TodoList("All Todos")];
   }
 
   getTitle() {

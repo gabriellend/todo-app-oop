@@ -19,7 +19,7 @@ const projectListView = new ProjectListView(projectListModel);
 
 // ProjectList Controller
 const projectListController = new ProjectListController(projectListModel, projectListView);
-projectListController.addProject(allTodosListModel);
+projectListController.render();
 
 // TodoList View
 const todoListView = new TodoListView(allTodosListModel);

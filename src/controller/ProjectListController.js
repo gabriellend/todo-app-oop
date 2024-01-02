@@ -8,4 +8,8 @@ export class ProjectListController {
         this.model.addProject(project);
         this.view.render();
     }
+
+    render() {
+        this.view.render();
+    }
 }
