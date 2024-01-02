@@ -2,30 +2,31 @@ import "./styles.css";
 
 import { ProjectList } from "./model/ProjectList";
 import { ProjectListView } from "./view/ProjectsView/ProjectListView";
+import { ProjectListController } from "./controller/ProjectListController";
 
-import { TodoList } from "./model/todoList";
+import { TodoList } from "./model/TodoList";
 import { TodoListView } from "./view/TodoListView/TodoListView";
 import { TodoListController } from "./controller/TodoListController";
 
-// TodoListModel
+// TodoList Model
 const allTodosListModel = new TodoList("All Todos");
 
 // ProjectList Model
 const projectListModel = new ProjectList();
-projectListModel.addProject(allTodosListModel);
 
 // ProjectList View
 const projectListView = new ProjectListView(projectListModel);
-projectListView.render();
 
 // ProjectList Controller
+const projectListController = new ProjectListController(projectListModel, projectListView);
+projectListController.addProject(allTodosListModel);
 
 // TodoList View
 const todoListView = new TodoListView(allTodosListModel);
-todoListView.render();
 
 // TodoList Controller
 const todoListController = new TodoListController(
   allTodosListModel,
   todoListView
 );
+todoListController.render();

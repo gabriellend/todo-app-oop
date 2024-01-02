@@ -1,4 +1,4 @@
-import { Todo } from "../model/todo";
+import { Todo } from "../model/Todo";
 
 export class TodoListController {
   constructor(model, view) {
@@ -13,4 +13,8 @@ export class TodoListController {
     this.model.addTodo(newTodo);
     this.view.render();
   };
+
+  render() {
+    this.view.render();
+  }
 }
