@@ -8,6 +8,10 @@ export class ProjectList {
     return this.title;
   }
 
+  getProjects() {
+    return this.projects;
+  }
+
   addProject(project) {
     this.projects.push(project);
     console.log("Project added");

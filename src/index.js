@@ -7,14 +7,14 @@ import { TodoList } from "./model/todoList";
 import { TodoListView } from "./view/TodoListView/TodoListView";
 
 // create default All Todos Project
-const allTodosProject = new TodoList("All Todos");
+const allTodosListModel = new TodoList("All Todos");
 
 const projectListModel = new ProjectList();
-projectListModel.addProject(allTodosProject);
+projectListModel.addProject(allTodosListModel);
 
 const projectListView = new ProjectListView(projectListModel);
-projectListView.render(projectListModel.projects);
+projectListView.render();
 
 // create default All Todos List
-const todoListView = new TodoListView(allTodosProject);
-todoListView.render(allTodosProject);
+const todoListView = new TodoListView(allTodosListModel);
+todoListView.render();
