@@ -19,7 +19,23 @@ export class TodoListView {
     this.addTodoButton = document.createElement("button");
     this.addTodoButton.className = "add-todo-button";
     this.addTodoButton.textContent = "Add todo";
-    this.addTodoButton.addEventListener("click", () => {});
+    this.addTodoButton.addEventListener("click", this.showAddTodoForm);
+  }
+
+  showAddTodoForm() {
+    // create li
+    // put form inside it
+    // add the onAddButtonClick to that button's event listener
+    // this.addButton.addEventListener("click", () => {
+    //   if (this.onAddButtonClick) {
+    //     this.onAddButtonClick();
+    //   }
+    // });
+    console.log("clicked");
+  }
+
+  setOnAddButtonClick(listener) {
+    this.onAddButtonClick = listener;
   }
 
   createTodoList() {
@@ -54,7 +70,7 @@ export class TodoListView {
 
     for (let todo of todos) {
       const todoListItem = document.createElement("li");
-      todoListItem.textContent = todo.getdescription();
+      todoListItem.textContent = todo.getDescription();
       this.todoListEl.append(todoListItem);
     }
   }
