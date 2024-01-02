@@ -1,8 +1,8 @@
 import "./TodoListView.css";
-import { TodoList } from "../../model/todoList";
+import { TodoList } from "../../model/TodoList";
 
 export class TodoListView {
-  static todoListViewCreated = false;
+  static initialized = false;
 
   constructor(todoListModel) {
     this.todoList = todoListModel;
@@ -56,9 +56,9 @@ export class TodoListView {
   render() {
     this.clearTodos();
 
-    if (!TodoListView.todoListViewCreated) {
+    if (!TodoListView.initialized) {
       this.createTodoList();
-      TodoListView.todoListViewCreated = true;
+      TodoListView.initialized = true;
     }
 
     const todos = this.todoList.getTodos();

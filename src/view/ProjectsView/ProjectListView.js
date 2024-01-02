@@ -1,7 +1,7 @@
 import "./ProjectListView.css";
 
 export class ProjectListView {
-  static sideBarCreated = false;
+  static initialized = false;
 
   constructor(projectListModel) {
     this.projectList = projectListModel;
@@ -38,9 +38,9 @@ export class ProjectListView {
   render() {
     this.clearProjects();
 
-    if (!ProjectListView.sideBarCreated) {
+    if (!ProjectListView.initialized) {
       this.createSideBar();
-      ProjectListView.sideBarCreated = true;
+      ProjectListView.initialized = true;
     }
 
     const projects = this.projectList.getProjects();
