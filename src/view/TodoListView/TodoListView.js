@@ -1,5 +1,5 @@
 import "./TodoListView.css";
-import { Todo } from "../../model/todo";
+import { TodoList } from "../../model/todo";
 
 export class TodoListView {
   static todoListViewCreated = false;
@@ -17,6 +17,7 @@ export class TodoListView {
     this.addTodoButton = document.createElement("button");
     this.addTodoButton.className = "add-todo-button";
     this.addTodoButton.textContent = "Add todo";
+    this.addTodoButton.addEventListener("click", () => {});
   }
 
   createTodoList() {
@@ -45,7 +46,7 @@ export class TodoListView {
     const todos = todoList.getTodos();
     if (!todos.length) {
       const todoListItem = document.createElement("li");
-      todoListItem.textContent = Todo.noTodosMessage;
+      todoListItem.textContent = TodoList.noTodosMessage;
       this.todoList.append(todoListItem);
     }
 

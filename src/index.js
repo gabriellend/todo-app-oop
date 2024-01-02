@@ -1,7 +1,6 @@
 import "./styles.css";
 
 import { ProjectList } from "./model/ProjectList";
-// import { Project } from "./model/Project";
 import { ProjectListView } from "./view/ProjectsView/ProjectListView";
 
 import { TodoList } from "./model/todoList";
@@ -15,7 +14,7 @@ projectListModel.addProject(allTodosProject);
 
 const projectListView = new ProjectListView(projectListModel);
 projectListView.render(projectListModel.projects);
-console.log(allTodosProject);
+
 // create default All Todos List
 const todoListView = new TodoListView(allTodosProject);
 todoListView.render(allTodosProject);

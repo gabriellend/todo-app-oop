@@ -16,6 +16,7 @@ export class ProjectListView {
     this.addProjectButton = document.createElement("button");
     this.addProjectButton.className = "add-project-button";
     this.addProjectButton.textContent = "Add Project";
+    this.addProjectButton.addEventListener("click", () => {});
   }
 
   createSideBar() {

@@ -1,12 +1,15 @@
 export class Todo {
   static id = 0;
-  static noTodosMessage = "No todos yet!";
 
   constructor(description, dueDate, priority) {
     this.id = ++Todo.id;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
+  }
+
+  getId() {
+    return this.id;
   }
 
   setDueDate(dueDate) {
