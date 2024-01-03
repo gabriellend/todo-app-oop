@@ -16,29 +16,107 @@ export class TodoListView {
     this.todoListEl = document.createElement("ul");
     this.todoListEl.className = "todo-list";
 
+    this.noTodosListItem = document.createElement("li");
+    this.noTodosListItem.id = "no-todos-list-item";
+    this.noTodosListItem.textContent = TodoList.noTodosMessage;
+
     this.addTodoButton = document.createElement("button");
     this.addTodoButton.className = "add-todo-button";
     this.addTodoButton.textContent = "Add todo";
     this.addTodoButton.addEventListener("click", this.showAddTodoForm);
   }
 
-  showAddTodoForm() {
-    // create li
-    // put form inside it
-    // add the onAddButtonClick to that button's event listener
-    // this.addButton.addEventListener("click", () => {
-    //   if (this.onAddButtonClick) {
-    //     this.onAddButtonClick();
-    //   }
-    // });
-    console.log("clicked");
+  createAddTodoForm() {
+    const tempLi = document.createElement("li");
+    tempLi.classList.add("tempLi");
+
+    const form = document.createElement('form');
+    form.id = 'todo-form';
+    form.addEventListener('submit', this.handleFormSubmit);
+
+    const descriptionDiv = document.createElement("div");
+    descriptionDiv.classList.add("form-div");
+    const descriptionLabel = document.createElement('label');
+    descriptionLabel.textContent = 'Description: ';
+    descriptionLabel.htmlFor = 'description';
+    const descriptionInput = document.createElement('input');
+    descriptionInput.type = 'text';
+    descriptionInput.id = 'description';
+    descriptionInput.placeholder = 'Description';
+    descriptionDiv.append(descriptionLabel, descriptionInput);
+
+    const priorityDiv = document.createElement("div");
+    priorityDiv.classList.add("form-div");
+    const priorityLabel = document.createElement('label');
+    priorityLabel.textContent = 'Priority: ';
+    priorityLabel.htmlFor = 'priority';
+    const prioritySelect = document.createElement('select');
+    prioritySelect.id = 'priority';
+    const priorities = ['Low', 'Medium', 'High'];
+    priorities.forEach(priority => {
+        const option = document.createElement('option');
+        option.value = priority.toLowerCase();
+        option.textContent = priority;
+        prioritySelect.appendChild(option);
+    });
+    priorityDiv.append(priorityLabel, prioritySelect);
+
+    const dueDateDiv = document.createElement("div");
+    dueDateDiv.classList.add("form-div");
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.textContent = 'Due Date: ';
+    dueDateLabel.htmlFor = 'dueDate';
+    const dueDateInput = document.createElement('input');
+    dueDateInput.type = 'date';
+    dueDateInput.id = 'dueDate';
+    dueDateDiv.append(dueDateLabel, dueDateInput);
+
+    const buttonDiv = document.createElement("div");
+    buttonDiv.classList.add("form-div");
+    const addButton = document.createElement('button');
+    addButton.type = 'submit';
+    addButton.textContent = 'Add';
+    const cancelButton = document.createElement('button');
+    cancelButton.type = 'button';
+    cancelButton.textContent = 'Cancel';
+    cancelButton.addEventListener("click", this.render);
+    buttonDiv.append(addButton, cancelButton);
+
+    form.append(descriptionDiv, priorityDiv, dueDateDiv, buttonDiv);
+    tempLi.append(form);
+
+    return tempLi;
+  }
+
+  showAddTodoForm = () => {
+    this.addTodoButton.classList.add("hidden");
+
+    if (this.noTodosListItem) {
+      this.noTodosListItem.remove();
+    }
+
+    const form = this.createAddTodoForm();
+  
+    this.todoListEl.append(form);
+  }
+
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    const description = document.getElementById('description').value;
+    const priority = document.getElementById('priority').value;
+    const dueDate = document.getElementById('dueDate').value;
+
+    if (this.onAddButtonClick) {
+      this.onAddButtonClick(description, dueDate, priority);
+    }
   }
 
   setOnAddButtonClick(listener) {
     this.onAddButtonClick = listener;
   }
 
-  createTodoList() {
+  initializeTodoList() {
     this.mainContainer.append(
       this.todoListHeader,
       this.todoListEl,
@@ -49,29 +127,28 @@ export class TodoListView {
     contentContainer.append(this.mainContainer);
   }
 
-  clearTodos() {
-    this.todoList.innerHTML = "";
+  clearTodoList() {
+    this.todoListEl.innerHTML = "";
   }
 
   render() {
-    this.clearTodos();
+    this.clearTodoList();
+    this.addTodoButton.classList.remove("hidden");
 
     if (!TodoListView.initialized) {
-      this.createTodoList();
+      this.initializeTodoList();
       TodoListView.initialized = true;
     }
 
     const todos = this.todoList.getTodos();
-    if (!todos.length) {
-      const todoListItem = document.createElement("li");
-      todoListItem.textContent = TodoList.noTodosMessage;
-      this.todoListEl.append(todoListItem);
+    if (!todos.length) {    
+      this.todoListEl.append(this.noTodosListItem);
     }
 
     for (let todo of todos) {
-      const todoListItem = document.createElement("li");
-      todoListItem.textContent = todo.getDescription();
-      this.todoListEl.append(todoListItem);
+      this.todoListItem = document.createElement("li");
+      this.todoListItem.textContent = todo.getDescription();
+      this.todoListEl.append(this.todoListItem);
     }
   }
 }
