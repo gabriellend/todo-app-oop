@@ -112,7 +112,7 @@ export class TodoListView {
     const description = document.getElementById("description").value;
     const priority = document.getElementById("priority").value;
     const dueDate = document.getElementById("dueDate").value;
-    console.log({ priority });
+
     if (description && priority && dueDate && this.onAddButtonClick) {
       const options = { year: "numeric", month: "short", day: "numeric" };
       const formattedDate = new Date(dueDate).toLocaleDateString(
@@ -129,6 +129,10 @@ export class TodoListView {
 
   setOnAddButtonClick(listener) {
     this.onAddButtonClick = listener;
+  }
+
+  setOnDeleteButtonClick(listener) {
+    this.onDeleteButtonClick = listener;
   }
 
   initializeTodoList() {
@@ -173,7 +177,16 @@ export class TodoListView {
       const priority = document.createElement("span");
       priority.textContent = todo.getPriority();
 
-      this.todoListItem.append(description, dueDate, priority);
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "todo-delete-button";
+      deleteButton.textContent = "X";
+      deleteButton.addEventListener("click", () => {
+        if (this.onDeleteButtonClick) {
+          this.onDeleteButtonClick(todo.getId());
+        }
+      });
+
+      this.todoListItem.append(description, dueDate, priority, deleteButton);
       this.todoListEl.append(this.todoListItem);
     }
   };
