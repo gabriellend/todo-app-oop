@@ -16,16 +16,18 @@ export class TodoListController {
     this.view.render();
 
     // Update local storage
-    const existingTodosJSON = LocalStorageUtils.get("allTodos");
-    let existingTodos = [];
+    const existingTodosJSON = LocalStorageUtils.get("todos");
+    let todos = existingTodosJSON ? JSON.parse(existingTodosJSON) : [];
 
-    if (existingTodosJSON) {
-      existingTodos = JSON.parse(existingTodosJSON);
-    }
+    todos.push({
+      id: newTodo.id,
+      description: newTodo.description,
+      project: newTodo.project,
+      dueDate: newTodo.dueDate,
+      priority: newTodo.priority,
+    });
 
-    existingTodos.push(newTodo);
-
-    LocalStorageUtils.setItem("allTodos", JSON.stringify(existingTodos));
+    LocalStorageUtils.set("todos", JSON.stringify(todos));
   };
 
   deleteTodo = (todoId) => {
@@ -33,18 +35,14 @@ export class TodoListController {
     this.view.render();
 
     // Update local storage
-    const existingTodosJSON = LocalStorageUtils.get("allTodos");
-    let existingTodos = [];
-
-    if (existingTodosJSON) {
-      existingTodos = JSON.parse(existingTodosJSON);
-    }
-
-    existingTodos = existingTodos.filter((todo) => todo.id !== todoId);
-    if (existingTodos.length === 0) {
+    const existingTodosJSON = LocalStorageUtils.get("todos");
+    let newTodos = JSON.parse(existingTodosJSON).filter(
+      (todo) => todo.id !== todoId
+    );
+    if (newTodos.length === 0) {
       LocalStorageUtils.clear();
     } else {
-      LocalStorageUtils.set("allTodos", JSON.stringify(existingTodos));
+      LocalStorageUtils.set("todos", JSON.stringify(newTodos));
     }
   };
 

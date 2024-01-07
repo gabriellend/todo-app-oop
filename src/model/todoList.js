@@ -28,8 +28,7 @@ export class TodoList {
     for (let todo of todos) {
       this.todos.push(todo);
     }
-
-    console.log("Todos added");
+    console.log("Todos set");
   }
 
   addTodo(todo) {

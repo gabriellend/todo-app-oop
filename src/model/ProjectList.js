@@ -1,8 +1,7 @@
 import { TodoList } from "./TodoList";
 export class ProjectList {
   constructor() {
-    // Initialize with default All Todos project
-    this.projects = [new TodoList("All Todos")];
+    this.projects = [];
   }
 
   getTitle() {
@@ -11,6 +10,13 @@ export class ProjectList {
 
   getProjects() {
     return this.projects;
+  }
+
+  setProjects(projects) {
+    for (let project of projects) {
+      this.projects.push(project);
+    }
+    console.log("Projects set");
   }
 
   addProject(project) {

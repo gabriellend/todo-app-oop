@@ -11,28 +11,40 @@ import { TodoListController } from "./controller/TodoListController";
 
 import { LocalStorageUtils } from "./utils/LocalStorageUtils";
 
-// TodoList Model
-const allTodosListModel = new TodoList("All Todos");
+let projectInstances = [];
+// LocalStorageUtils.clear();
+// Check if there is anything in localStorage
+const projectsJSON = LocalStorageUtils.get("projects");
+const todosJSON = LocalStorageUtils.get("todos");
+if (projectsJSON !== null && todosJSON !== null) {
+  const projectNames = JSON.parse(projectsJSON);
+  const todos = JSON.parse(todosJSON);
 
-// Check if there are any todos in localStorage
-const allTodosJson = LocalStorageUtils.get("allTodos");
-if (allTodosJson !== null) {
-  const allTodosObjects = JSON.parse(allTodosJson);
-  const allTodosInstances = allTodosObjects.map(
-    (allTodosObject) =>
-      new Todo(
-        allTodosObject.description,
-        allTodosObject.dueDate,
-        allTodosObject.priority,
-        allTodosObject.project
-      )
-  );
+  projectInstances = projectNames.map((projectName) => {
+    const todoList = new TodoList(projectName);
+    const todoInstances = todos
+      .filter((todo) => {
+        if (projectName === "All Todos") {
+          return true;
+        } else {
+          todo.project === projectName;
+        }
+      })
+      .map((todo) => new Todo(todo.description, todo.dueDate, todo.priority));
 
-  allTodosListModel.setTodos(allTodosInstances);
+    todoList.setTodos(todoInstances);
+    return todoList;
+  });
+} else {
+  // Initialize with default empty allTodos list
+  projectInstances = [new TodoList("All Todos")];
+  LocalStorageUtils.set("projects", JSON.stringify(["All Todos"]));
+  LocalStorageUtils.set("todos", JSON.stringify([]));
 }
 
 // ProjectList Model
 const projectListModel = new ProjectList();
+projectListModel.setProjects(projectInstances);
 
 // ProjectList View
 const projectListView = new ProjectListView(projectListModel);
@@ -44,12 +56,12 @@ const projectListController = new ProjectListController(
 );
 projectListController.render();
 
-// TodoList View
-const todoListView = new TodoListView(allTodosListModel);
+// TodoList View - default to allTodos list
+const todoListView = new TodoListView(projectInstances[0]);
 
 // TodoList Controller
 const todoListController = new TodoListController(
-  allTodosListModel,
+  projectInstances[0],
   todoListView
 );
 todoListController.render();
