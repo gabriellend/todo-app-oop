@@ -112,6 +112,10 @@ export class TodoListView {
     const description = document.getElementById("description").value;
     const priority = document.getElementById("priority").value;
     const dueDate = document.getElementById("dueDate").value;
+    const project =
+      this.todoList.getTitle() !== "All Todos"
+        ? this.todoList.getTitle()
+        : undefined;
 
     if (description && priority && dueDate && this.onAddButtonClick) {
       const options = { year: "numeric", month: "short", day: "numeric" };
@@ -120,7 +124,7 @@ export class TodoListView {
         options
       );
 
-      this.onAddButtonClick(description, formattedDate, priority);
+      this.onAddButtonClick(description, formattedDate, priority, project);
     } else {
       alert("Something is missing...");
       return;

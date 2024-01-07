@@ -24,6 +24,14 @@ export class TodoList {
     return this.todos;
   }
 
+  setTodos(todos) {
+    for (let todo of todos) {
+      this.todos.push(todo);
+    }
+
+    console.log("Todos added");
+  }
+
   addTodo(todo) {
     this.todos.push(todo);
     console.log("Todo added");

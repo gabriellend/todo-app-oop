@@ -1,11 +1,12 @@
 export class Todo {
   static id = 0;
 
-  constructor(description, dueDate, priority) {
+  constructor(description, dueDate, priority, project = undefined) {
     this.id = ++Todo.id;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
+    this.project = project;
   }
 
   getId() {
