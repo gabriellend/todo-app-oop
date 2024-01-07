@@ -27,65 +27,71 @@ export class TodoListView {
   }
 
   createAddTodoForm() {
-    const tempLi = document.createElement("li");
-    tempLi.classList.add("tempLi");
+    const formLi = document.createElement("li");
+    formLi.classList.add("formLi");
 
-    const form = document.createElement('form');
-    form.id = 'todo-form';
-    form.addEventListener('submit', this.handleFormSubmit);
+    const form = document.createElement("form");
+    form.id = "todo-form";
+    form.addEventListener("submit", this.handleFormSubmit);
 
     const descriptionDiv = document.createElement("div");
     descriptionDiv.classList.add("form-div");
-    const descriptionLabel = document.createElement('label');
-    descriptionLabel.textContent = 'Description: ';
-    descriptionLabel.htmlFor = 'description';
-    const descriptionInput = document.createElement('input');
-    descriptionInput.type = 'text';
-    descriptionInput.id = 'description';
-    descriptionInput.placeholder = 'Description';
+    const descriptionLabel = document.createElement("label");
+    descriptionLabel.textContent = "Description: ";
+    descriptionLabel.htmlFor = "description";
+    const descriptionInput = document.createElement("input");
+    descriptionInput.type = "text";
+    descriptionInput.id = "description";
+    descriptionInput.placeholder = "Write your todo...";
     descriptionDiv.append(descriptionLabel, descriptionInput);
 
     const priorityDiv = document.createElement("div");
     priorityDiv.classList.add("form-div");
-    const priorityLabel = document.createElement('label');
-    priorityLabel.textContent = 'Priority: ';
-    priorityLabel.htmlFor = 'priority';
-    const prioritySelect = document.createElement('select');
-    prioritySelect.id = 'priority';
-    const priorities = ['Low', 'Medium', 'High'];
-    priorities.forEach(priority => {
-        const option = document.createElement('option');
-        option.value = priority.toLowerCase();
-        option.textContent = priority;
-        prioritySelect.appendChild(option);
+    const priorityLabel = document.createElement("label");
+    priorityLabel.textContent = "Priority: ";
+    priorityLabel.htmlFor = "priority";
+    const prioritySelect = document.createElement("select");
+    prioritySelect.id = "priority";
+    const defaultOption = document.createElement("option");
+    defaultOption.textContent = "Choose...";
+    defaultOption.value = "";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    prioritySelect.appendChild(defaultOption);
+    const priorities = ["Low", "Medium", "High"];
+    priorities.forEach((priority) => {
+      const option = document.createElement("option");
+      option.value = priority.toLowerCase();
+      option.textContent = priority;
+      prioritySelect.appendChild(option);
     });
     priorityDiv.append(priorityLabel, prioritySelect);
 
     const dueDateDiv = document.createElement("div");
     dueDateDiv.classList.add("form-div");
-    const dueDateLabel = document.createElement('label');
-    dueDateLabel.textContent = 'Due Date: ';
-    dueDateLabel.htmlFor = 'dueDate';
-    const dueDateInput = document.createElement('input');
-    dueDateInput.type = 'date';
-    dueDateInput.id = 'dueDate';
+    const dueDateLabel = document.createElement("label");
+    dueDateLabel.textContent = "Due Date: ";
+    dueDateLabel.htmlFor = "dueDate";
+    const dueDateInput = document.createElement("input");
+    dueDateInput.type = "date";
+    dueDateInput.id = "dueDate";
     dueDateDiv.append(dueDateLabel, dueDateInput);
 
     const buttonDiv = document.createElement("div");
     buttonDiv.classList.add("form-div");
-    const addButton = document.createElement('button');
-    addButton.type = 'submit';
-    addButton.textContent = 'Add';
-    const cancelButton = document.createElement('button');
-    cancelButton.type = 'button';
-    cancelButton.textContent = 'Cancel';
+    const addButton = document.createElement("button");
+    addButton.type = "submit";
+    addButton.textContent = "Add";
+    const cancelButton = document.createElement("button");
+    cancelButton.type = "button";
+    cancelButton.textContent = "Cancel";
     cancelButton.addEventListener("click", this.render);
     buttonDiv.append(addButton, cancelButton);
 
     form.append(descriptionDiv, priorityDiv, dueDateDiv, buttonDiv);
-    tempLi.append(form);
+    formLi.append(form);
 
-    return tempLi;
+    return formLi;
   }
 
   showAddTodoForm = () => {
@@ -96,21 +102,30 @@ export class TodoListView {
     }
 
     const form = this.createAddTodoForm();
-  
+
     this.todoListEl.append(form);
-  }
+  };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    const description = document.getElementById('description').value;
-    const priority = document.getElementById('priority').value;
-    const dueDate = document.getElementById('dueDate').value;
+    const description = document.getElementById("description").value;
+    const priority = document.getElementById("priority").value;
+    const dueDate = document.getElementById("dueDate").value;
+    console.log({ priority });
+    if (description && priority && dueDate && this.onAddButtonClick) {
+      const options = { year: "numeric", month: "short", day: "numeric" };
+      const formattedDate = new Date(dueDate).toLocaleDateString(
+        "en-US",
+        options
+      );
 
-    if (this.onAddButtonClick) {
-      this.onAddButtonClick(description, dueDate, priority);
+      this.onAddButtonClick(description, formattedDate, priority);
+    } else {
+      alert("Something is missing...");
+      return;
     }
-  }
+  };
 
   setOnAddButtonClick(listener) {
     this.onAddButtonClick = listener;
@@ -131,7 +146,7 @@ export class TodoListView {
     this.todoListEl.innerHTML = "";
   }
 
-  render() {
+  render = () => {
     this.clearTodoList();
     this.addTodoButton.classList.remove("hidden");
 
@@ -141,14 +156,25 @@ export class TodoListView {
     }
 
     const todos = this.todoList.getTodos();
-    if (!todos.length) {    
+    if (!todos.length) {
       this.todoListEl.append(this.noTodosListItem);
     }
 
     for (let todo of todos) {
       this.todoListItem = document.createElement("li");
-      this.todoListItem.textContent = todo.getDescription();
+      this.todoListItem.className = "todo-list-item";
+
+      const description = document.createElement("p");
+      description.textContent = todo.getDescription();
+
+      const dueDate = document.createElement("time");
+      dueDate.textContent = todo.getDueDate();
+
+      const priority = document.createElement("span");
+      priority.textContent = todo.getPriority();
+
+      this.todoListItem.append(description, dueDate, priority);
       this.todoListEl.append(this.todoListItem);
     }
-  }
+  };
 }
