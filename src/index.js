@@ -9,10 +9,13 @@ import { TodoList } from "./model/TodoList";
 import { TodoListView } from "./view/TodoListView/TodoListView";
 import { TodoListController } from "./controller/TodoListController";
 
+import { LocalStorageUtils } from "./utils/LocalStorageUtils";
+
 // TodoList Model
 const allTodosListModel = new TodoList("All Todos");
 
-const allTodosJson = localStorage.getItem("allTodos");
+// Check if there are any todos in localStorage
+const allTodosJson = LocalStorageUtils.get("allTodos");
 if (allTodosJson !== null) {
   const allTodosObjects = JSON.parse(allTodosJson);
   const allTodosInstances = allTodosObjects.map(
@@ -24,6 +27,7 @@ if (allTodosJson !== null) {
         allTodosObject.project
       )
   );
+
   allTodosListModel.setTodos(allTodosInstances);
 }
 

@@ -1,4 +1,5 @@
 import { Todo } from "../model/Todo";
+import { LocalStorageUtils } from "../utils/LocalStorageUtils";
 
 export class TodoListController {
   constructor(model, view) {
@@ -15,15 +16,16 @@ export class TodoListController {
     this.view.render();
 
     // Update local storage
-    const existingTodosJSON = localStorage.getItem("allTodos");
+    const existingTodosJSON = LocalStorageUtils.get("allTodos");
     let existingTodos = [];
 
     if (existingTodosJSON) {
       existingTodos = JSON.parse(existingTodosJSON);
     }
-    console.log({ existingTodos });
+
     existingTodos.push(newTodo);
-    localStorage.setItem("allTodos", JSON.stringify(existingTodos));
+
+    LocalStorageUtils.setItem("allTodos", JSON.stringify(existingTodos));
   };
 
   deleteTodo = (todoId) => {
@@ -31,7 +33,7 @@ export class TodoListController {
     this.view.render();
 
     // Update local storage
-    const existingTodosJSON = localStorage.getItem("allTodos");
+    const existingTodosJSON = LocalStorageUtils.get("allTodos");
     let existingTodos = [];
 
     if (existingTodosJSON) {
@@ -40,9 +42,9 @@ export class TodoListController {
 
     existingTodos = existingTodos.filter((todo) => todo.id !== todoId);
     if (existingTodos.length === 0) {
-      localStorage.clear();
+      LocalStorageUtils.clear();
     } else {
-      localStorage.setItem("allTodos", JSON.stringify(existingTodos));
+      LocalStorageUtils.set("allTodos", JSON.stringify(existingTodos));
     }
   };
 
