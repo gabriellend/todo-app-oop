@@ -22,7 +22,9 @@ export class ProjectListView {
 
   createAddProjectForm() {
     const formLi = document.createElement("li");
+    formLi.className = "project-form-li";
     const form = document.createElement("form");
+    form.className = "project-form";
     form.addEventListener("submit", this.handleFormSubmit);
 
     const input = document.createElement("input");
@@ -31,16 +33,17 @@ export class ProjectListView {
     input.placeholder = "Project name...";
     input.required = true;
 
+    const buttonDiv = document.createElement("div");
     const addButton = document.createElement("button");
     addButton.type = "submit";
     addButton.textContent = "Add";
-
     const cancelButton = document.createElement("button");
     cancelButton.type = "button";
     cancelButton.textContent = "Cancel";
     cancelButton.addEventListener("click", this.render);
+    buttonDiv.append(addButton, cancelButton);
 
-    form.append(input, addButton, cancelButton);
+    form.append(input, buttonDiv);
     formLi.append(form);
 
     input.focus();
@@ -51,6 +54,7 @@ export class ProjectListView {
   showAddProjectForm = () => {
     const form = this.createAddProjectForm();
     this.projectListEl.append(form);
+    this.addProjectButton.classList.add("hidden");
   };
 
   handleFormSubmit = (event) => {
@@ -65,6 +69,10 @@ export class ProjectListView {
 
   setOnAddButtonClick(listener) {
     this.onAddButtonClick = listener;
+  }
+
+  setOnDeleteButtonClick(listener) {
+    this.onDeleteButtonClick = listener;
   }
 
   clearProjects() {
@@ -84,6 +92,7 @@ export class ProjectListView {
 
   render = () => {
     this.clearProjects();
+    this.addProjectButton.classList.remove("hidden");
 
     if (!ProjectListView.initialized) {
       this.createSideBar();
@@ -93,7 +102,23 @@ export class ProjectListView {
     const projects = this.projectList.getProjects();
     for (let project of projects) {
       const projectListItem = document.createElement("li");
-      projectListItem.textContent = project.title;
+      projectListItem.className = "project";
+
+      const projectTitle = document.createElement("h3");
+      projectTitle.textContent = project.title;
+
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "X";
+      deleteButton.style.visibility =
+        project.title === "All Todos" ? "hidden" : "visible";
+      deleteButton.type = "button";
+      deleteButton.addEventListener("click", () => {
+        if (this.onDeleteButtonClick) {
+          this.onDeleteButtonClick(project.getTitle());
+        }
+      });
+
+      projectListItem.append(projectTitle, deleteButton);
       this.projectListEl.append(projectListItem);
     }
   };

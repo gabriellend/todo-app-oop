@@ -38,6 +38,7 @@ export class TodoListController {
     let newTodos = JSON.parse(existingTodosJSON).filter(
       (todo) => todo.id !== todoId
     );
+
     if (newTodos.length === 0) {
       LocalStorageUtils.clear();
     } else {

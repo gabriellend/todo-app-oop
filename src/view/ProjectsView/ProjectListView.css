@@ -4,3 +4,27 @@
   border: 1px black solid;
   flex: 1;
 }
+
+.project {
+  display: flex;
+  justify-content: space-between;
+  border: 1px black solid;
+}
+
+.project-form-li {
+  height: 60px;
+}
+
+.project-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#project-name-input {
+  width: 100%;
+  height: 30px;
+}

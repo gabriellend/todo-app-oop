@@ -25,8 +25,10 @@ export class ProjectList {
     console.log("Project added");
   }
 
-  deleteProject(projectId) {
-    this.projects = this.projects.filter((project) => project.id !== projectId);
+  deleteProject(projectTitle) {
+    this.projects = this.projects.filter(
+      (project) => project.title !== projectTitle
+    );
     console.log("Project deleted");
   }
 
