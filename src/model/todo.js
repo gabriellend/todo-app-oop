@@ -38,4 +38,12 @@ export class Todo {
   getDescription() {
     return this.description;
   }
+
+  getProject() {
+    return this.project;
+  }
+
+  setProject(projectName) {
+    this.project = projectName;
+  }
 }

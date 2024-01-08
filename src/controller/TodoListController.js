@@ -11,8 +11,7 @@ export class TodoListController {
   }
 
   addTodo = (description, dueDate, priority, project) => {
-    const newTodo = new Todo(description, dueDate, priority, project);
-    this.model.addTodo(newTodo);
+    const newTodo = this.model.addTodo(description, dueDate, priority, project);
     this.view.render();
 
     // Update local storage
@@ -20,11 +19,11 @@ export class TodoListController {
     let todos = existingTodosJSON ? JSON.parse(existingTodosJSON) : [];
 
     todos.push({
-      id: newTodo.id,
-      description: newTodo.description,
-      project: newTodo.project,
-      dueDate: newTodo.dueDate,
-      priority: newTodo.priority,
+      id: newTodo.getId(),
+      description: newTodo.getDescription(),
+      project: newTodo.getProject(),
+      dueDate: newTodo.getDueDate(),
+      priority: newTodo.getPriority(),
     });
 
     LocalStorageUtils.set("todos", JSON.stringify(todos));

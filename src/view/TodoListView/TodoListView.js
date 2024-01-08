@@ -57,13 +57,13 @@ export class TodoListView {
     defaultOption.value = "";
     defaultOption.disabled = true;
     defaultOption.selected = true;
-    prioritySelect.appendChild(defaultOption);
+    prioritySelect.append(defaultOption);
     const priorities = ["Low", "Medium", "High"];
     priorities.forEach((priority) => {
       const option = document.createElement("option");
       option.value = priority.toLowerCase();
       option.textContent = priority;
-      prioritySelect.appendChild(option);
+      prioritySelect.append(option);
     });
     priorityDiv.append(priorityLabel, prioritySelect);
 
@@ -91,6 +91,8 @@ export class TodoListView {
     form.append(descriptionDiv, priorityDiv, dueDateDiv, buttonDiv);
     formLi.append(form);
 
+    descriptionInput.focus();
+
     return formLi;
   }
 
@@ -109,9 +111,9 @@ export class TodoListView {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    const description = document.getElementById("description").value;
-    const priority = document.getElementById("priority").value;
-    const dueDate = document.getElementById("dueDate").value;
+    const description = event.target.querySelector("#description").value;
+    const priority = event.target.querySelector("#priority").value;
+    const dueDate = event.target.querySelector("#dueDate").value;
     const project =
       this.todoList.getTitle() !== "All Todos"
         ? this.todoList.getTitle()

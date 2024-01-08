@@ -19,7 +19,8 @@ export class ProjectList {
     console.log("Projects set");
   }
 
-  addProject(project) {
+  addProject(projectName) {
+    const project = new TodoList(projectName);
     this.projects.push(project);
     console.log("Project added");
   }

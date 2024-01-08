@@ -17,7 +17,54 @@ export class ProjectListView {
     this.addProjectButton = document.createElement("button");
     this.addProjectButton.className = "add-project-button";
     this.addProjectButton.textContent = "Add Project";
-    this.addProjectButton.addEventListener("click", () => {});
+    this.addProjectButton.addEventListener("click", this.showAddProjectForm);
+  }
+
+  createAddProjectForm() {
+    const formLi = document.createElement("li");
+    const form = document.createElement("form");
+    form.addEventListener("submit", this.handleFormSubmit);
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "project-name-input";
+    input.placeholder = "Project name...";
+    input.required = true;
+
+    const addButton = document.createElement("button");
+    addButton.type = "submit";
+    addButton.textContent = "Add";
+
+    const cancelButton = document.createElement("button");
+    cancelButton.type = "button";
+    cancelButton.textContent = "Cancel";
+    cancelButton.addEventListener("click", this.render);
+
+    form.append(input, addButton, cancelButton);
+    formLi.append(form);
+
+    input.focus();
+
+    return formLi;
+  }
+
+  showAddProjectForm = () => {
+    const form = this.createAddProjectForm();
+    this.projectListEl.append(form);
+  };
+
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    const projectName = event.target.querySelector("#project-name-input").value;
+
+    if (this.onAddButtonClick) {
+      this.onAddButtonClick(projectName);
+    }
+    event.target.parentElement.remove();
+  };
+
+  setOnAddButtonClick(listener) {
+    this.onAddButtonClick = listener;
   }
 
   clearProjects() {
@@ -35,7 +82,7 @@ export class ProjectListView {
     contentContainer.append(this.projectsContainer);
   }
 
-  render() {
+  render = () => {
     this.clearProjects();
 
     if (!ProjectListView.initialized) {
@@ -49,5 +96,5 @@ export class ProjectListView {
       projectListItem.textContent = project.title;
       this.projectListEl.append(projectListItem);
     }
-  }
+  };
 }

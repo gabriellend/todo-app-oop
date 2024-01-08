@@ -1,3 +1,5 @@
+import { Todo } from "./Todo";
+
 export class TodoList {
   static id = 0;
   static noTodosMessage = "No todos yet!";
@@ -31,9 +33,12 @@ export class TodoList {
     console.log("Todos set");
   }
 
-  addTodo(todo) {
+  addTodo(description, dueDate, priority, project) {
+    const todo = new Todo(description, dueDate, priority, project);
     this.todos.push(todo);
     console.log("Todo added");
+
+    return todo;
   }
 
   deleteTodo(todoId) {
