@@ -75,6 +75,10 @@ export class ProjectListView {
     this.onDeleteButtonClick = listener;
   }
 
+  setOnProjectClick(listener) {
+    this.onProjectClick = listener;
+  }
+
   clearProjects() {
     this.projectListEl.innerHTML = "";
   }
@@ -103,6 +107,11 @@ export class ProjectListView {
     for (let project of projects) {
       const projectListItem = document.createElement("li");
       projectListItem.className = "project";
+      projectListItem.addEventListener("click", () => {
+        if (this.onProjectClick) {
+          this.onProjectClick(project.id);
+        }
+      });
 
       const projectTitle = document.createElement("h3");
       projectTitle.textContent = project.title;

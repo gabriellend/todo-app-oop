@@ -1,14 +1,16 @@
 import { LocalStorageUtils } from "../utils/LocalStorageUtils";
 export class ProjectListController {
-  constructor(model, view) {
-    this.model = model;
-    this.view = view;
+  constructor(projectList, projectListView, todoListController) {
+    this.model = projectList;
+    this.view = projectListView;
+    this.controller = todoListController;
 
-    this.view.setOnAddButtonClick(this.addProject);
-    this.view.setOnDeleteButtonClick(this.deleteProject);
+    this.view.setOnAddButtonClick(this.handleAddProject);
+    this.view.setOnDeleteButtonClick(this.handleDeleteProject);
+    this.view.setOnProjectClick(this.handleProjectClick);
   }
 
-  addProject = (projectName) => {
+  handleAddProject = (projectName) => {
     this.model.addProject(projectName);
     this.view.render();
 
@@ -21,7 +23,7 @@ export class ProjectListController {
     LocalStorageUtils.set("projects", JSON.stringify(projects));
   };
 
-  deleteProject = (projectTitle) => {
+  handleDeleteProject = (projectTitle) => {
     this.model.deleteProject(projectTitle);
     this.view.render();
 
@@ -38,6 +40,10 @@ export class ProjectListController {
 
     LocalStorageUtils.set("projects", JSON.stringify(newProjectsList));
     LocalStorageUtils.set("todos", JSON.stringify(newTodos));
+  };
+
+  handleProjectClick = (projectId) => {
+    // Logic to update TodoListController based on the selected project
   };
 
   render() {

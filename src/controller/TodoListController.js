@@ -46,6 +46,10 @@ export class TodoListController {
     }
   };
 
+  updateTodoListForProject(projectId) {
+    // Logic to update the todo list based on the selected project
+  }
+
   render() {
     this.view.render();
   }

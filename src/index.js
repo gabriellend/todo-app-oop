@@ -42,6 +42,15 @@ if (projectsJSON !== null && todosJSON !== null) {
   LocalStorageUtils.set("todos", JSON.stringify([]));
 }
 
+// TodoList View - default to allTodos list
+const todoListView = new TodoListView(projectInstances[0]);
+
+// TodoList Controller
+const todoListController = new TodoListController(
+  projectInstances[0],
+  todoListView
+);
+
 // ProjectList Model
 const projectListModel = new ProjectList();
 projectListModel.setProjects(projectInstances);
@@ -52,16 +61,9 @@ const projectListView = new ProjectListView(projectListModel);
 // ProjectList Controller
 const projectListController = new ProjectListController(
   projectListModel,
-  projectListView
+  projectListView,
+  todoListController
 );
+
 projectListController.render();
-
-// TodoList View - default to allTodos list
-const todoListView = new TodoListView(projectInstances[0]);
-
-// TodoList Controller
-const todoListController = new TodoListController(
-  projectInstances[0],
-  todoListView
-);
 todoListController.render();
