@@ -1,4 +1,6 @@
 import { LocalStorageUtils } from "../utils/LocalStorageUtils";
+import { Todo } from "../model/Todo";
+
 export class ProjectListController {
   constructor(projectList, projectListView, todoListController) {
     this.model = projectList;
@@ -45,9 +47,14 @@ export class ProjectListController {
   handleProjectClick = (projectName) => {
     const todosJSON = LocalStorageUtils.get("todos");
     const todos = JSON.parse(todosJSON);
+
     const todoInstances = todos
       .filter((todo) => {
-        todo.project === projectName;
+        if (projectName === "All Todos") {
+          return true;
+        } else {
+          return todo.project === projectName;
+        }
       })
       .map(
         (todo) =>

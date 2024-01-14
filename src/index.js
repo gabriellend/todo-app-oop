@@ -37,7 +37,8 @@ if (projectsJSON !== null && todosJSON !== null) {
   });
 } else {
   // Initialize with default empty allTodos list
-  projectInstances = [new TodoList("All Todos")];
+  const allTodosList = new TodoList("All Todos");
+  projectInstances = [allTodosList];
   LocalStorageUtils.set("projects", JSON.stringify(["All Todos"]));
   LocalStorageUtils.set("todos", JSON.stringify([]));
 }
