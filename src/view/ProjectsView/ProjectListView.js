@@ -107,9 +107,13 @@ export class ProjectListView {
     for (let project of projects) {
       const projectListItem = document.createElement("li");
       projectListItem.className = "project";
-      projectListItem.addEventListener("click", () => {
+      projectListItem.addEventListener("click", (event) => {
+        // I tried project.title instead of the event but when
+        // I would click on the All Todos project, it would
+        // render the element I clicked just before instead.
+        const projectName = event.target.firstChild.innerText;
         if (this.onProjectClick) {
-          this.onProjectClick(project.title);
+          this.onProjectClick(projectName);
         }
       });
 
