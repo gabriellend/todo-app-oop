@@ -141,6 +141,12 @@ export class TodoListView {
     this.onDeleteButtonClick = listener;
   }
 
+  updateTodoList(newTodoList) {
+    this.todoList = newTodoList;
+    this.todoListHeader.textContent = this.todoList.getTitle();
+    this.render();
+  }
+
   initializeTodoList() {
     this.mainContainer.append(
       this.todoListHeader,
@@ -164,6 +170,8 @@ export class TodoListView {
       this.initializeTodoList();
       TodoListView.initialized = true;
     }
+
+    this.todoListHeader.textContent = this.todoList.getTitle();
 
     const todos = this.todoList.getTodos();
     if (!todos.length) {

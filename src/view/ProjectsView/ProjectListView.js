@@ -109,7 +109,7 @@ export class ProjectListView {
       projectListItem.className = "project";
       projectListItem.addEventListener("click", () => {
         if (this.onProjectClick) {
-          this.onProjectClick(project.id);
+          this.onProjectClick(project.title);
         }
       });
 

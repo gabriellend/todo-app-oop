@@ -46,8 +46,18 @@ export class TodoListController {
     }
   };
 
-  updateTodoListForProject(projectId) {
-    // Logic to update the todo list based on the selected project
+  updateTodoList(projectName, todos) {
+    this.model.setTitle(projectName);
+    this.model.clearTodos();
+
+    if (todos.length) {
+      this.model.setTodos(todos);
+    } else {
+      this.model.clearTodos();
+    }
+
+    this.view.updateTodoList(this.model);
+    this.view.render();
   }
 
   render() {

@@ -42,8 +42,19 @@ export class ProjectListController {
     LocalStorageUtils.set("todos", JSON.stringify(newTodos));
   };
 
-  handleProjectClick = (projectId) => {
-    // Logic to update TodoListController based on the selected project
+  handleProjectClick = (projectName) => {
+    const todosJSON = LocalStorageUtils.get("todos");
+    const todos = JSON.parse(todosJSON);
+    const todoInstances = todos
+      .filter((todo) => {
+        todo.project === projectName;
+      })
+      .map(
+        (todo) =>
+          new Todo(todo.description, todo.dueDate, todo.priority, todo.project)
+      );
+
+    this.controller.updateTodoList(projectName, todoInstances);
   };
 
   render() {

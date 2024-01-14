@@ -1,17 +1,11 @@
 import { Todo } from "./Todo";
 
 export class TodoList {
-  static id = 0;
   static noTodosMessage = "No todos yet!";
 
   constructor(title) {
-    this.id = ++TodoList.id;
     this.title = title;
     this.todos = [];
-  }
-
-  getId() {
-    return this.id;
   }
 
   getTitle() {
@@ -31,6 +25,10 @@ export class TodoList {
       this.todos.push(todo);
     }
     console.log("Todos set");
+  }
+
+  clearTodos() {
+    this.todos = [];
   }
 
   addTodo(description, dueDate, priority, project) {
