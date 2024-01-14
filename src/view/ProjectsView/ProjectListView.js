@@ -83,7 +83,7 @@ export class ProjectListView {
     this.projectListEl.innerHTML = "";
   }
 
-  createSideBar() {
+  initializeProjectList() {
     this.projectsContainer.append(
       this.projectsHeader,
       this.projectListEl,
@@ -99,7 +99,7 @@ export class ProjectListView {
     this.addProjectButton.classList.remove("hidden");
 
     if (!ProjectListView.initialized) {
-      this.createSideBar();
+      this.initializeProjectList();
       ProjectListView.initialized = true;
     }
 

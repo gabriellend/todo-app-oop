@@ -30,7 +30,7 @@ export class ProjectListController {
     // Update local storage
     const existingProjectsJSON = LocalStorageUtils.get("projects");
     const newProjectsList = JSON.parse(existingProjectsJSON).filter(
-      (project) => project.title !== projectTitle
+      (project) => project !== projectTitle
     );
 
     const existingTodosJSON = LocalStorageUtils.get("todos");
