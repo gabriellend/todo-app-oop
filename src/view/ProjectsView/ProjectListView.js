@@ -94,6 +94,27 @@ export class ProjectListView {
     contentContainer.append(this.projectsContainer);
   }
 
+  addProjectListItemEventListener(projectListItem) {
+    projectListItem.addEventListener("click", (event) => {
+      // I tried project.getTitle() instead of the event but when
+      // I would click on the All Todos project, it would
+      // render the element I clicked just before instead.
+      const projectName = event.target.firstChild.innerText;
+      if (this.onProjectClick) {
+        this.onProjectClick(projectName);
+      }
+    });
+  }
+
+  addDeleteButtonEventListener(deleteButton, project) {
+    deleteButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (this.onDeleteButtonClick) {
+        this.onDeleteButtonClick(project.getTitle());
+      }
+    });
+  }
+
   render = () => {
     this.clearProjects();
     this.addProjectButton.classList.remove("hidden");
@@ -107,29 +128,17 @@ export class ProjectListView {
     for (let project of projects) {
       const projectListItem = document.createElement("li");
       projectListItem.className = "project";
-      projectListItem.addEventListener("click", (event) => {
-        // I tried project.title instead of the event but when
-        // I would click on the All Todos project, it would
-        // render the element I clicked just before instead.
-        const projectName = event.target.firstChild.innerText;
-        if (this.onProjectClick) {
-          this.onProjectClick(projectName);
-        }
-      });
+      this.addProjectListItemEventListener(projectListItem);
 
       const projectTitle = document.createElement("h3");
-      projectTitle.textContent = project.title;
+      projectTitle.textContent = project.getTitle();
 
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "X";
       deleteButton.style.visibility =
-        project.title === "All Todos" ? "hidden" : "visible";
+        project.getTitle() === "All Todos" ? "hidden" : "visible";
       deleteButton.type = "button";
-      deleteButton.addEventListener("click", () => {
-        if (this.onDeleteButtonClick) {
-          this.onDeleteButtonClick(project.getTitle());
-        }
-      });
+      this.addDeleteButtonEventListener(deleteButton, project);
 
       projectListItem.append(projectTitle, deleteButton);
       this.projectListEl.append(projectListItem);

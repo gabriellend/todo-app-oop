@@ -27,7 +27,7 @@ export class ProjectList {
 
   deleteProject(projectTitle) {
     this.projects = this.projects.filter(
-      (project) => project.title !== projectTitle
+      (project) => project.getTitle() !== projectTitle
     );
     console.log("Project deleted");
   }
